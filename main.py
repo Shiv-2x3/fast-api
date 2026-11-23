@@ -1,17 +1,22 @@
 from fastapi import FastAPI
+import json
 
 app = FastAPI() #app --> Fast api object
 
-@app.get("/") # This is a route --> With  a get request to process user request
-def hello():
-    return {'message': "Hello World"}
+def Load_data():
+    with open('paitents.json' , 'r') as file:
+        data = json.load(file)
+    return data
 
-@app.get("/bio")
-def bio():
-    return {'message' : "This is me.. yes me!!"}
+@app.get('/')
+def home():
+    return {'message' : 'Paitent managment system API'}
 
-@app.get("/topic")
-def topic():
-    return {'topic-1' : 'ML',
-            'topic-2' : 'DS',
-            'topic3' : 'linux'}
+@app.get('/about')
+def about():
+    return {'description' : 'A working API for sysem management'}
+
+@app.get("/view")
+def view():
+    collection = Load_data()
+    return collection
